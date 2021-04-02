@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script src="JS/jq.js"></script>
+		<script src="JS/sysFunc.js"></script>
+		<script src="JS/codeImpl.js"></script>
+		<script src="JS/values.js"></script>
+		<script src="JS/analyse.js"></script>
+		<script src="JS/includeParts/printParts.js"></script>
+		<link rel="stylesheet" href="CSS/style.css" />
+		<link rel="stylesheet" href="CSS/Classes.css" />
+		<script>
+			var myJson = classes; // JSON object from external js file
+			var jsonStr = JSON.stringify(myJson); // Just an optional variable, to print the JSON object as string
+			
+			/* Parsing the URL parameters */
+			var params = new URLSearchParams(location.search); // The GET parameters from the URL
+			var className = params.get("class");
+			
+			/* Checking whether there are URL parameters given */
+			// className == null ? printErr("CLASS IS NULL", 1) : printOK("CLASS IS OK", 1);
+			// funcName == null ? printErr("FUNCTION IS NULL", 1) : printOK("FUNCTION IS OK", 1);
+			
+			
+			var DATA = analyseClass(myJson, className);
+			var GOOD = false;
+			if (DATA == -1) { // There was an error while trying to analyse the information
+				GOOD = false;
+				document.write("error");
+			} else { // Analyse was good
+				GOOD = true;
+			}
+		</script>
+	</head>
+<body>
+	<script>printNav();</script>
+	<header>
+		<span class="border_bottom_style1">
+			<span>מחלקה - </span>
+			<span><script>document.write(DATA.nameCap);</script></span>
+		</span>
+	</header>
+	<div class="container"> <!-- Contains the summary of the explnation, variables and classes -->
+		<div class="function_explained border_style1">
+		<!--
+			Originally for a function, but might be useful for a class.
+			- It is just a styled div - light grey background, and dark grey, thick left border
+			- Nice for showing a short code, like a function signature for example
+			<div class="field">
+				<div class="function_sign">
+					<script></script>
+				</div>
+			</div>
+		-->
+			<div class="field">
+				<div class="parameter">הסבר:</div>
+				<div class="value">
+					<script>document.write(DATA.exp);</script>
+				</div>
+			</div>
+			<hr />
+			<div class="field">
+				<div class="parameter">פונקציות:</div>
+				<div class="value">
+					<ul class="catagory_listing">
+						<script>
+							for (var currentIndex in DATA.functions) {
+								var currentFuncName = DATA.functions[currentIndex].name;
+								document.write('<li>');
+								// document.write('<span class="functionList_sign">' + DATA.functions[currentIndex].sign + "</span>"); // The functions' signatures
+								document.write('' +
+									'<span class="functionList_sign">' +
+									'<a target="_blank" href="' + WEBSITE_URL + '/viewFunc.html?class=' + DATA.name + '&func=' + currentFuncName + '">' +
+									DATA.functions[currentIndex].sign +
+									"</a></span>" +
+									""); // The functions' signature - a link to its explnation page
+									document.write('<ul>'); // The functions' explnations
+										document.write('<li>');
+											document.write("<span>" + DATA.functions[currentIndex].explain + "</span>");
+										document.write("</li>");
+									document.write("</ul>");
+										document.write("<hr />"); // Should be before or after the </ul> ? Need to check
+								document.write("</li>");
+							}
+						</script>
+					</ul>
+				</div>
+			</div>
+			<hr />
+			<div class="field">
+				<div class="parameter">משתנים:</div>
+				<div class="value">
+					<ul class="catagory_listing">
+						<script>
+							for (var currentIndex in DATA.vars) {
+								document.write("<li>");
+								document.write('<span class="functionList_sign">' + DATA.vars[currentIndex].sign + "</span>"); // The functions' signatures
+									document.write('<ul>');
+										document.write("<li>");
+											document.write("<span>" + DATA.vars[currentIndex].explain + "</span>");
+										document.write("</li>");
+										document.write("<hr />");
+									document.write("</ul>");
+								document.write("</li>");
+							}
+						</script>
+					</ul>
+				</div>
+			</div>
+			<hr />
+			<div class="field">
+				<div class="parameter">הערות נוספות:</div>
+				<div class="value">
+					<script>document.write(DATA.extraInfo);</script>
+				</div>
+			</div>
+		</div>
+		<br /><br /><br /><br />
+		<div class="code_sample border_style1">
+			<span class="title">קוד המחלקה:</span>
+			<div class="code_content">
+			<span style="white-space: pre;">
+				<script></script>
+			</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

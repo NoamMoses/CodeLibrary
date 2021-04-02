@@ -1,0 +1,12 @@
+1) Make sure why I created the class "catagory_listing" if it's never used - ul lists of classes
+2) Learn more about unicode-bidi: plaintext; - fixing the rtl and ltr problem/s
+3) Add links system, to link between everything - that every function name will be a link to its page.
+4) Make sure that I didn't, and won't, write text-explnation in the explnation of the function's return value - it should be just "a full number", or "a string" - not an explnation
+
+
+הכול עובד טוב, צריך להתחיל מערכך אינדקסים - רשימה נפתחת של כול המחלקות, ורשימה של כול הפונקציות - כשאתה בוחר מחלקה, אז הרשימה של הפונקציות תהיה רק עם הפונקציות של המחלקה.
+אחרי שבוחרים גם מחלקה וגם פונקצייה, יהיה כפתור חיפוש, או אוטומטי, אתה תועבר לדף של הפונקצייה.
+במידה ורוצים להגיע לדף של המחלקה, אז או שיהיה אזור אחר בדף - רק עם רשימה אחת, או שפשוט יהה כפתור, ובמידה ואתה לוחץ עליו ואין פונקצייה שנבחרה, אז סימן שאתה רוצה לקבל את הפונקצייה - או לחשוב על דרך אחרת
+ובנוסף לעשות שכול ציון mentioning של פונקצייה, ומחלקה, יהיה קישור לדף של המחלקה או של הפונקצייה - גם אם זה הדף עצמו, לא צריך להתיחחס למקרה exception הזה
+וזהו, בהצלחה לי
+19:27

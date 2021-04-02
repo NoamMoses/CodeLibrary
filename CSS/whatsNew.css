@@ -1,0 +1,28 @@
+.update {
+	border: solid red 1px;
+}
+
+.update span:first-child { /* Version number/name */
+	font-size: 20px;
+	font-weight: bold;
+	/*
+	text-decoration: underline;
+	*/
+	border-bottom: solid grey 2px;
+	width: 8%; /* Not automatic because it has display: block; */
+	margin-bottom: 1%;
+}
+
+.update span:nth-child(3) { /* Version date (second index is the br) */
+	font-size: 16px;
+	font-weight: bold;
+	color: grey;
+}
+
+.update span:first-child, .update span:nth-child(3) {
+	display: block;
+}
+
+ul li {
+	font-size: 18px;
+}

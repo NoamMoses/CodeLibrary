@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8" />
+	<script src="JS/jq.js"></script>
+	<script src="JS/sysFunc.js"></script>
+	<script src="JS/codeImpl.js"></script>
+	<script src="JS/values.js"></script>
+	<script src="JS/analyse.js"></script>
+	<script src="JS/includeParts/printParts.js"></script>
+	<link rel="stylesheet" href="CSS/style.css" />
+	<link rel="stylesheet" href="CSS/indexPage.css" />
+	<script>
+		var myJson = classes; // JSON object from values.js file
+		var jsonStr = JSON.stringify(myJson); // Just an optional variable, to print the JSON object as string
+	</script>
+	</head>
+<body>
+	<script>
+		printNav();
+		$("#navSearch").css("font-style", "italic");
+	</script>
+	<header>
+		<span>חיפש מחלקה\פונקצייה</span>
+	</header>
+	<div class="container">
+		<div id="searchBox" class="border_style1">
+			<div id="titles">
+				<div id="rightBox" class="sideBoxes">
+					<script>
+						document.write('<div class="row"><div class="insideCentre"><span class="listLabel"><label for="selectClass">מחלקה:</label></span></div></div>');
+						document.write('<div class="row"><div class="insideCentre"><span class="listLabel"><label for="selectFunctions">פונקצייה:</label></span></div></div>');
+					</script>
+				</div>
+				<div id="leftBox" class="sideBoxes">
+					<script>
+						var allClasses = getAllClassesNames(myJson);
+						document.write("" +
+						'<div class="row">' +
+						'<select id="selectClass">' +
+						'<option disabled selected class="defaultListOption">' + "נא לבחור מחלקה</option>" +
+						"");
+						for (var i in allClasses) {
+							var currentClassNameLC, currentClassNameUC;				
+							currentClassNameLC = myJson[allClasses[i]].name; // LC for Lower Case
+							currentClassNameUC = allClasses[i]; // UC for Upper Case
+							document.write('<option value=\"'+ currentClassNameLC +'\">' + currentClassNameUC + "</option>");
+						}
+						document.write("" +
+						"</select>" +
+						"</div>" +
+						"");
+						document.write("" +
+						'<div class="row">' +
+						'<select id="selectFunctions">' +
+						'<option disabled selected class="defaultListOption">' + "נא לבחור קודם מחלקה</option>" +
+						"</select>" +
+						"</div>" +
+						"");
+					</script>
+				</div>
+			</div>
+			<div id="buttonsBox">
+				<input type="button" class="indexSearch" id="searchClass" value="חיפוש מחלקה" />
+				<input type="button" class="indexSearch" id="searchFunction" value="חיפוש פונקצייה" style="margin-right: 5%;" />
+				<br />
+				<input type="checkbox" class="indexSearch" id="openNewTab" />
+				<span><label for="openNewTab">פתח בכרטיסיה חדשה</label></span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
+
+<script>
+
+/* Select tags */
+var selectClass = $("#selectClass"),
+	selectFunctions = $("#selectFunctions");
+/* The selected class, and function's names */
+var selectedClass = null, selectedFunction = null;
+
+/* When the user chooses a class */
+selectClass.change(function(){
+	selectedClass = $("#selectClass option:selected").val(); // The selected class from list
+	var funcOfClass = getFuncNamesByClass(myJson, selectedClass); // JSON object of all the classes of the required class
+	selectFunctions.empty();
+	for (var i in funcOfClass) { // Re-create the functions' list with the current chosen class' functions
+		selectFunctions.append($("<option></option>").attr("value", funcOfClass[i].name).text(funcOfClass[i].nameCap));
+	}
+});
+
+/* Making the default list option null */
+var defaultListOption = $(".defaultListOption");
+defaultListOption.attr("value", "empty"); // Since I can't set it to "null" or "undefined" manually - null will be just no value, not actually null
+
+/* The lists */
+var searchClassButton = $("#searchClass"), searchFunctionButton = $("#searchFunction");
+
+/* Checkbox to be used as an indicator to whether to open the page in a new tab or not */
+var openNewTab;
+var newUrl; // URL of the desired class/function page
+
+/* When the user chooses a class */
+searchClassButton.click(function(){
+	if (selectedClass == null || selectedClass == "empty") { // Class isn't chosen
+		errorBorder(selectClass);
+	} else {
+		newUrl = WEBSITE_URL + "/viewClass.html?class=" + selectedClass + "";
+		openNewTab = $("#openNewTab").prop("checked");
+		if (openNewTab) { // Open in a new tab
+			window.open(newUrl, "_blank");
+		} else {
+			window.location.href = newUrl;
+		}
+	}
+});
+
+/* When the user chooses a function */
+searchFunctionButton.click(function(){
+	selectedFunction = $("#selectFunctions option:selected").val();
+	if (selectedFunction == null || selectedFunction == "empty") { // Function isn't chosen
+		errorBorder(selectFunctions);
+	} else {
+		newUrl = WEBSITE_URL + "/viewFunc.html?class=" + selectedClass + "&func=" + selectedFunction + "";
+		// window.open(newUrl, "_blank", "height=500,width=500");
+		openNewTab = $("#openNewTab").prop("checked");
+		if (openNewTab) { // Open in a new tab
+			window.open(newUrl, "_blank");
+		} else {
+			window.location.href = newUrl;
+		}
+	}
+});
+
+/*
+
+main.html is now viewFunc.html
+
+Example url:
+file:///C:/Users/Noam/Documents/Code%20library/main.html?class=button&func=isclicked
+file:///C:/Users/Noam/Documents/Code%20library/viewClass.html?class=button
+*/
+
+</script>

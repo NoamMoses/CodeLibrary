@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<script src="JS/jq.js"></script>
+		<script src="JS/sysFunc.js"></script>
+		<script src="JS/codeImpl.js"></script>
+		<script src="JS/values.js"></script>
+		<script src="JS/analyse.js"></script>
+		<script src="JS/includeParts/printParts.js"></script>
+		<link rel="stylesheet" href="CSS/style.css" />
+		<link rel="stylesheet" href="CSS/Classes.css" />
+		
+		<script>
+			var myJson = classes; // JSON object from external js file
+			var jsonStr = JSON.stringify(myJson); // Just an optional variable, to print the JSON object as string
+
+			/* Parsing the URL parameters */
+			var params = new URLSearchParams(location.search); // The GET parameters from the URL
+			var className = params.get("class"), funcName = params.get("func");
+
+			/* Checking whether there are URL parameters given */
+			// className == null ? printErr("CLASS IS NULL", 1) : printOK("CLASS IS OK", 1);
+			// funcName == null ? printErr("FUNCTION IS NULL", 1) : printOK("FUNCTION IS OK", 1);
+
+
+			var DATA = analyse(myJson, className, funcName);
+			var GOOD = false;
+			if (DATA == -1) { // There was an error while trying to analyse the information
+				GOOD = false;
+			} else { // Analyse was good
+				GOOD = true;
+			}
+		</script>
+	</head>
+<body>
+	<script>printNav();</script>
+	<header>
+		<span class="border_bottom_style1">
+			<span>פונקצייה - </span>
+			<span>
+				<script>document.write(DATA.func.nameCap);</script>
+			</span>
+			<span>(מחלקה -</span>
+			<span>
+				<script>document.write('<a class="functionClassName" target="_blank" href="' + WEBSITE_URL + '/viewClass.html?class=' + DATA.class.name + '">' + DATA.class.nameCap + '</a>');</script>
+			</span>
+			<span>)</span>
+		</span>
+	</header>
+	<div class="container"> <!-- Contains the summary of the explnation, variables and classes -->
+		<div class="function_explained border_style1">
+			<div class="field">
+				<div class="function_sign">
+					<script>document.write(DATA.func.sign);</script>
+				</div>
+			</div>
+			<div class="field">
+				<div class="parameter">הסבר:</div>
+				<div class="value">
+					<script>document.write(DATA.func.explain);</script>
+				</div>
+			</div>
+			<hr />
+			<div class="field">
+				<div class="parameter">פרמטרים:</div>
+				<div class="value">
+					<script>document.write(DATA.func.param);</script>
+				</div>
+			</div>
+			<hr />
+			<div class="field">
+				<div class="parameter">ערך מוחזר:</div>
+				<div class="value">
+					<script>document.write(DATA.func.return);</script>
+				</div>
+			</div>
+			<hr />
+			<div class="field">
+				<div class="parameter">הערות נוספות:</div>
+				<div class="value">
+					<script>document.write(DATA.func.info);</script>
+				</div>
+			</div>
+		</div>
+		<br /><br /><br /><br />
+		<div class="code_sample border_style1">
+			<span class="title">קוד הפונקצייה:</span>
+			<div class="code_content">
+			<span style="white-space: pre;">
+				<script>document.write(DATA.func.code);</script>
+			</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+.sections { /* Both of the function_explained and the code_sample - useful for backgrounds, borders, etc */
+	/* Moved to style.css class name border_style1 */
+	/*
+	border-right: double grey 6px;
+	border-bottom: double grey 6px;
+	*/
+}
+
+.function_explained { /* The information about the function - all of the fields */
+	direction: rtl;
+	height: auto;
+	width: 50%; /* Could be also 300px */
+	padding-right: 1%;
+}
+
+.function_sign { /* The signature of the function - nice background colour, border on the left, etc.. */
+	background-color: #F2F2F2; /* old was #CCCCCC */
+	direction: ltr; /* Because it's a code */
+	padding: 3% 3% 3% 8%;
+	border-left: solid #D1D1D1 20px;
+	border-radius: 3%;
+}
+
+.function_explained .field:last-child { /* Last field, should be "extra information" - overridin the margin */
+	margin-bottom: 0px;
+}
+
+.function_explained hr { /* The seperation line between each of the fields */
+	width: 80%;
+}
+
+
+/*
+ * -----------
+ * | Fields |
+ * -----------
+*/
+
+.field { /* The entire field - title (parameter) and value */
+	margin-bottom: 3%;
+}
+
+.parameter { /* The field's title */
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 1%;
+}
+
+.functionList_sign {
+	/*
+	* The functions' signatures, in the list - fixing the rtl-ltr
+	* so the function signature (which is in English) will be good
+	* int a(); - good
+	* explicit Button(int); - bad
+	* int isPressedd(); - bad
+	* explicit Button(int); - good
+	* int isPressedd(); - good
+	*/
+	unicode-bidi: plaintext;
+}
+
+.functionList_sign a, .functionClassName { /* The link to the function's explnation page, or the class's name, when you view a function page */
+	color: #00087C;
+	font-weight: bold;
+}
+
+
+/*
+ * ---------------
+ * | Code sample |
+ * ---------------
+*/
+
+.code_sample { /* The container of the code sample */
+	height: auto;
+	width: 60%;
+	/*
+	border: solid black 1px;
+	*/
+	padding-right: 1%;
+	padding: 1%;
+	background-color: #D1D1D1;
+}
+
+.code_sample .title { /* The title, just a fixed text */
+	font-size: 18px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.code_content { /* The code itself */
+	/*
+	* Other colour codes that were in use
+	#E6E6E6
+	#D1D1D1
+	*/
+	border-left: dotted #D1D1D1 10px;
+	padding: 2%;
+	direction: ltr; /* Because it's the code */
+	background-color: #F2F2F2;
+	margin-top: 2%; /* Between the title and the code */
+}
